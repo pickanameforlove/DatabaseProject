@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="com.trainManageSystem.dao.DingdanDao">
+
+
+    <select id="selectByAccount" parameterType="String" resultType="Dingdan">
+        select * from dingDan where account = #{account}
+    </select>
+    <insert id="insertDD" parameterType="Dingdan">
+        insert into dingDan(from_station,to_station,date,account,money) values (#{from_station},#{to_station},#{date},#{account},#{money})
+    </insert>
+    <select id="selectMax" resultType="int">
+        select max(order_id) from dingDan
+    </select>
+    <delete id="deleteDD" parameterType="int">
+        delete from dingDan where order_id = #{order_id}
+    </delete>
+    <update id="updateDate">
+        update dingDan set date = #{arg1} where order_id = #{arg0}
+    </update>
+    <select id="selectDD" parameterType="String" resultType="Dingdan">
+        select * from dingDan where account = #{account}
+    </select>
+    <delete id="deleteD" parameterType="String">
+        delete from dingDan where account = #{account}
+    </delete>
+    <select id="selectAll" resultType="Dingdan">
+        select * from dingDan
+    </select>
+
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="com.trainManageSystem.dao.TwoTrainsDao">
+
+<!--    <resultMap id="TrainResultMap" type="TwoTrains">-->
+<!--        <result property="train_no1" column="trainno1"/>-->
+<!--        <result property=""-->
+<!--    </resultMap>-->
+    <select id="selectAll" resultType="TwoTrains">
+        SELECT
+            a.train_no AS train_no1,
+            a.train_name AS train_name1,
+            a.start_station AS start_station1,
+            a.end_station AS end_station1,
+            a.start_time AS start_time1,
+            a.end_time AS end_time1,
+            a.duration AS duration1,
+            a.TDZ AS TDZ1,
+            a.YDZ AS YDZ1,
+            a.EDZ AS EDZ1,
+            a.GJRW AS GJRW1,
+            a.RW AS RW1,
+            a.DW AS DW1,
+            a.YW AS YW1,
+            a.RZ AS RZ1,
+            a.YZ AS YZ1,
+            a.WZ AS WZ1,
+            b.train_no AS train_no2,
+            b.train_name AS train_name2,
+            b.start_station AS start_station2,
+            b.end_station AS end_station2,
+            b.start_time AS start_time2,
+            b.end_time AS end_time2,
+            b.duration AS duration2,
+            b.TDZ AS TDZ2,
+            b.YDZ AS YDZ2,
+            b.EDZ AS EDZ2,
+            b.GJRW AS GJRW2,
+            b.RW AS RW2,
+            b.DW AS DW2,
+            b.YW AS YW2,
+            b.RZ AS RZ2,
+            b.YZ AS YZ2,
+            b.WZ AS WZ2
+        FROM
+            template a,
+            template b
+        WHERE
+            a.end_station = b.start_station AND a.start_station LIKE #{arg0} and b.end_station like #{arg1} and a.end_time > b.start_time
+        limit #{arg2},#{arg3}
+    </select>
+
+</mapper>

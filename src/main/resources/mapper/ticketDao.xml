@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="com.trainManageSystem.dao.TicketDao">
+
+    <select id="selectCountTicket" resultType="int">
+        select count(*) from ticket where (train_no = #{arg0} and from_station >= #{arg1} and #{arg2} >= to_station) or (train_no = #{arg0} and #{arg1} > from_station and to_station > #{arg2})
+        or (train_no = #{arg0} and #{arg2} >= from_station and to_station >= #{arg2} and from_station > #{arg1}) or (train_no = #{arg0} and #{arg1} >= from_station and to_station >= to_station and #{arg2} > to_station)
+    </select>
+
+    <select id="selectTicketsByOrder" parameterType="int" resultType="Ticket">
+        select * from ticket where order_id = #{order_id}
+    </select>
+    <insert id="insertTicket" parameterType="Ticket">
+        insert into ticket(train_no,from_station,to_station,id,seat_type,price,date,start_time,end_time,arrive_day_diff,carriage_id,seat_number,order_id) values (#{train_no},#{from_station},#{to_station},#{id},#{seat_type},
+       #{price},#{date},#{start_time},#{end_time},#{arrive_day_diff},#{carriage_id},#{seat_number},#{order_id})
+    </insert>
+
+    <select id="selectSeatType" resultType="int">
+        select count(*) from ticket where train_no = #{arg0} and seat_type = #{arg1}
+    </select>
+
+    <select id="selectRest" resultType="int">
+        select count(*) from ticket where train_no = #{arg0} and from_station = #{arg1} and to_station = #{arg2} and seat_type = #{arg3}
+    </select>
+    <select id="selectRestPlus" resultType="int">
+        select count(*) from ticket a,train_time b,train_time c where a.train_no = b.train_no and c.train_no = a.train_no and a.from_station = b.station_name and a.to_station = c.station_name and a.train_no = #{arg0} and a.seat_type = #{arg3} and ((#{arg1} >= b.station_no and c.station_no >= #{arg2}) or (b.station_no >= #{arg1} and #{arg2} >= c.station_no) or (#{arg1}>=b.station_no and c.station_no >= #{arg1} and #{arg2} >= c.station_no) or (c.station_no>=#{arg2} and #{arg2} >= b.station_no and b.station_no >= #{arg1}))
+    </select>
+    <delete id="deleteTicket" parameterType="int">
+        delete from ticket where ticket_id = #{ticket_id}
+    </delete>
+    <select id="selectOrder_id" parameterType="int" resultType="int">
+        select order_id from ticket where ticket_id = #{ticket_id}
+    </select>
+    <select id="selectCount" parameterType="int" resultType="int">
+        select count(*) from ticket where order_id = #{order_id}
+    </select>
+
+    <select id="selectTicketSimple" resultType="ticket" parameterType="int">
+        select ticket_id,date from ticket where order_id = #{order_id}
+    </select>
+
+    <update id="updateTicket">
+        update ticket set date = #{arg1} where ticket_id = #{arg0}
+    </update>
+    <delete id="deleteTs" parameterType="int">
+        delete from ticket where order_id = #{order_id}
+    </delete>
+    <delete id="deleteT" parameterType="String">
+        delete from ticket where train_no = #{train_no}
+    </delete>
+    <select id="selectAll" resultType="ticket">
+        select * from ticket
+    </select>
+
+
+</mapper>

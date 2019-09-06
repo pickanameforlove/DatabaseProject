@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="com.trainManageSystem.dao.userDao">
+    <select id="login" resultType="String" parameterType="String">
+        select password from user where account = #{account}
+    </select>
+    <select id="selectUserByacc" resultType="user" parameterType="String">
+        select * from user where account = #{acc}
+    </select>
+    <insert id="register">
+        insert into user(account,password) values(#{arg0},#{arg1})
+    </insert>
+    <update id="updateId">
+        update user set id = #{arg1} where account = #{arg0}
+    </update>
+    <update id="updatePassword">
+        update user set password = #{arg1} where account = #{arg0}
+    </update>
+    <select id="selectUser" resultType="user">
+        select * from user
+    </select>
+    <delete id="deleteUser" parameterType="String">
+        delete from user where account = #{account}
+    </delete>
+    <insert id="insert" parameterType="user">
+        insert into user(account,password,id) values(#{account},#{password},#{id})
+    </insert>
+
+</mapper>

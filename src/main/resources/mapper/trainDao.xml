@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="com.trainManageSystem.dao.TrainDao">
+
+    <select id="selectAllTrain" resultType="train">
+        SELECT * FROM train
+    </select>
+
+    <select id="selectCount" resultType="int">
+        select count(1) from train
+    </select>
+    <select id="selectBatchTrains" resultType="train">
+        select * from train limit #{arg0},#{arg1}
+    </select>
+    <delete id="deleteTrain" parameterType="String">
+        delete from train where train_no = #{train_no}
+    </delete>
+
+</mapper>
